@@ -12,22 +12,28 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Updated to v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4  # Updated to v4
+        with:
+          node-version: 18  # Specify Node.js version
 
       - name: Install dependencies
-        uses: bahmutov/npm-install@v1
+        run: npm install  # Directly using npm instead of external action
 
       - name: Build project
         run: npm run build
 
+      - name: Verify build output
+        run: ls -la ./dist  # Debugging step to check if 'dist' exists
+
       - name: Upload production-ready build files
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4  # Ensure using v4
         with:
           name: production-files
           path: ./dist
+          if-no-files-found: error  # Fail workflow if no files found
 
   deploy:
     name: Deploy
@@ -37,13 +43,16 @@ jobs:
 
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v4  # Ensure using v4
         with:
           name: production-files
           path: ./dist
 
+      - name: Verify downloaded files
+        run: ls -la ./dist  # Debugging step to check if 'dist' exists
+
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4  # Use the latest version
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
