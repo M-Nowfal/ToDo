@@ -3,14 +3,14 @@ import React, { useEffect, useState } from 'react';
 function TodoInput(props) {
 
     const [toDo, setToDo] = useState("");
+    
     useEffect(()=>{
-        document.getElementById("task-input").addEventListener("focus",()=>{
-            document.getElementById("feather").style.display = "none";
-        });
-        document.getElementById("task-input").addEventListener("blur",()=>{
+        if(document.getElementById("task-input").value === ""){
             document.getElementById("feather").style.display = "block";
-        });
-    });
+        }else{
+            document.getElementById("feather").style.display = "none";
+        }
+    },[toDo]);
 
     function handleAdd(){
         if(toDo.trim()){
