@@ -19,7 +19,8 @@ function TodoInput(props) {
                     id: Date.now(),
                     time: new Date(),
                     task: toDo,
-                    completed: false
+                    completed: false,
+                    user: localStorage.getItem("toDoUser")
                 }
             );
             setToDo('');
