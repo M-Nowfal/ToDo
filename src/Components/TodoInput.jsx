@@ -3,12 +3,13 @@ import React, { useEffect, useState } from 'react';
 function TodoInput(props) {
 
     const [toDo, setToDo] = useState("");
+    const [visible, setVisible] = useState(true);
     
     useEffect(()=>{
-        if(document.getElementById("task-input").value === ""){
-            document.getElementById("feather").style.display = "block";
+        if(toDo.trim()){
+            setVisible(false);
         }else{
-            document.getElementById("feather").style.display = "none";
+            setVisible(true);
         }
     },[toDo]);
 
@@ -30,7 +31,7 @@ function TodoInput(props) {
     return (
         <div className="container d-flex justify-content-center my-5">
             <div className="input-container">
-                <img src="feather.png" id="feather" className="feather" alt="feather" />
+                {visible && <img src="feather.png" id="feather" className="feather" alt="feather" />}
                 <input
                     id="task-input"
                     className="input-field"

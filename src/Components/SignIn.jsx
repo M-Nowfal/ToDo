@@ -9,7 +9,7 @@ function SignIn() {
         if(!user.trim())
             return;
 
-        fetch(`http://localhost:3000/create-to-do-user/${user}`, { method: "post" })
+        fetch(`${import.meta.env.VITE_API_URL}/${user}`, { method: "post" })
         .then(res => res.json())
         .then(data => {
             if(data.success){
