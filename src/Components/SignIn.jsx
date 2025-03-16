@@ -9,7 +9,7 @@ function SignIn() {
         if(!user.trim())
             return;
 
-        fetch(`${import.meta.env.VITE_API_URL}/${user}`, { method: "post" })
+        fetch(`https://to-do-backend-one-tau.vercel.app/${user}`, { method: "post" })
         .then(res => res.json())
         .then(data => {
             if(data.success){
