@@ -4,17 +4,32 @@ function TodoInput(props) {
 
     const [toDo, setToDo] = useState("");
     const [visible, setVisible] = useState(true);
-    
-    useEffect(()=>{
-        if(toDo.trim()){
+
+    useEffect(() => {
+        if (toDo.trim()) {
             setVisible(false);
-        }else{
+        } else {
             setVisible(true);
         }
-    },[toDo]);
+    }, [toDo]);
 
-    function handleAdd(){
-        if(toDo.trim()){
+    function handleAdd() {
+
+        if (toDo === "clearsession") {
+            fetch(`${import.meta.env.VITE_API_URL}/delete-to-do-user/${localStorage.getItem("toDoUser")}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        localStorage.clear();
+                        location.reload();
+                    } else {
+                        alert("Something went wrong");
+                    }
+                })
+                .catch(err => console.log(err));
+        }
+
+        if (toDo.trim()) {
             props.addTask(
                 {
                     id: Date.now(),
