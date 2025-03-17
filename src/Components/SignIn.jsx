@@ -10,6 +10,9 @@ function SignIn() {
         if (!user.trim())
             return;
 
+        if (user === "clearsession")
+            localStorage.clear();
+
         !oldUser ? (
             fetch(`${import.meta.env.VITE_API_URL}/create-to-do-user/${user}`, { method: "post" })
                 .then(res => res.json())
